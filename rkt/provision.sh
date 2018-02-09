@@ -4,7 +4,7 @@ echo "Provisioning ${HOSTNAME}"
 
 echo "Installing build deps"
 apt-get update > /dev/null
-apt-get install -y unzip > /dev/null
+apt-get install -y unzip rng-tools > /dev/null
 
 echo "Installing rkt packages"
 wget https://github.com/rkt/rkt/releases/download/v1.29.0/rkt_1.29.0-1_amd64.deb > /dev/null
@@ -19,3 +19,4 @@ mkdir /consul > /dev/null
 chmod a+x build-consul.sh > /dev/null
 chmod a+x build-vault.sh > /dev/null
 chmod a+x initialize-vault.sh > /dev/null
+chmod a+x cleanup.sh > /dev/null

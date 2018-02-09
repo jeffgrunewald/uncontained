@@ -1,0 +1,13 @@
+[Unit]
+Description=consul-and-vault
+
+[Service]
+Slice=machine.slice
+ExecStart=/usr/bin/rkt run --port=consul:8500 \
+                           --port=vault:8200 \
+                           --volume=consul-data,kind=host,source=/consul \
+                           /home/vagrant/consul-v1.0.3.aci \
+                           /home/vagrant/vault-v0.9.3.aci
+ExecStopPost=/usr/bin/rkt gc --mark-only
+KillMode=mixed
+Restart=always
