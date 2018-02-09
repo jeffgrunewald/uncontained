@@ -1,3 +1,3 @@
-path "/project2" {
+path "project2/*" {
   capabilities = ["read", "list"]
 }

@@ -1,0 +1,113 @@
+{
+    "acVersion": "1.29.0",
+    "acKind": "PodManifest",
+    "apps": [
+        {
+            "name": "consul-v1-0-3",
+            "image": {
+                "name": "jeffgrunewald/consul-v1.0.3",
+                "id": "sha512-20164f36ec4cc7ddc0e2829f60c29862501d0fc65d643d5736ffb61a86c777f8",
+                "labels": [
+                    {
+                        "name": "arch",
+                        "value": "amd64"
+                    },
+                    {
+                        "name": "os",
+                        "value": "linux"
+                    }
+                ]
+            },
+            "app": {
+                "exec": [
+                    "/consul",
+                    "agent",
+                    "-bind=127.0.0.1",
+                    "-client=0.0.0.0",
+                    "-bootstrap-expect=1",
+                    "-recursor=8.8.8.8",
+                    "-server",
+                    "-ui",
+                    "-datacenter=enterprise",
+                    "-data-dir=/data/consul"
+                ],
+                "user": "0",
+                "group": "0",
+                "mountPoints": [
+                    {
+                        "name": "consul-data",
+                        "path": "/data/consul"
+                    }
+                ],
+                "ports": [
+                    {
+                        "name": "consul",
+                        "protocol": "tcp",
+                        "port": 8500,
+                        "count": 1,
+                        "socketActivated": false
+                    }
+                ]
+            }
+        },
+        {
+            "name": "vault-v0-9-3",
+            "image": {
+                "name": "jeffgrunewald/vault-v0.9.3",
+                "id": "sha512-59bee14051dd87b6527ff3dbda2f1b0acf9bf48ee71b2052104a75ee7d066ed8",
+                "labels": [
+                    {
+                        "name": "arch",
+                        "value": "amd64"
+                    },
+                    {
+                        "name": "os",
+                        "value": "linux"
+                    }
+                ]
+            },
+            "app": {
+                "exec": [
+                    "/vault",
+                    "server",
+                    "-config=/config.hcl"
+                ],
+                "user": "0",
+                "group": "0",
+                "ports": [
+                    {
+                        "name": "vault",
+                        "protocol": "tcp",
+                        "port": 8200,
+                        "count": 1,
+                        "socketActivated": false
+                    }
+                ]
+            }
+        }
+    ],
+    "volumes": [
+        {
+            "name": "consul-data",
+            "kind": "host",
+            "source": "/consul"
+        }
+    ],
+    "isolators": null,
+    "annotations": [
+        {
+            "name": "coreos.com/rkt/stage1/mutable",
+            "value": "false"
+        }
+    ],
+    "ports": [
+        {
+            "name": "consul",
+            "hostPort": 8500
+        },
+        {
+            "name": "vault",
+            "hostPort": 8200
+        }
+    ]
+}

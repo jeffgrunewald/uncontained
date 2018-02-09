@@ -8,6 +8,7 @@ Vagrant.configure("2") do |config|
         rkt.vm.hostname = "rkt-host"
         rkt.vm.box = BOX_BASE
 
+        rkt.vm.network :forwarded_port, guest: 8200, host: 8200
         rkt.vm.network :forwarded_port, guest: 8500, host: 8500
 
         rkt.vm.provider :virtualbox do |vbox|
@@ -17,8 +18,11 @@ Vagrant.configure("2") do |config|
             vbox.customize ["modifyvm", :id, "--name", "rkt-host"]
         end
 
-        rkt.vm.provision "file", source: "consul", destination: "$HOME/consul"
-        rkt.vm.provision "file", source: "vault", destination: "$HOME/vault"
+        rkt.vm.provision "file", source: "build-consul.sh", destination: "build-consul.sh"
+        rkt.vm.provision "file", source: "build-vault.sh", destination: "build-vault.sh"
+        rkt.vm.provision "file", source: "initialize-vault.sh", destination: "initialize-vault.sh"
+        rkt.vm.provision "file", source: "consul-vault-pod.json", destination: "consul-vault-pod.json"
+        rkt.vm.provision "file", source: "vault-configs", destination: "vault-configs"
         rkt.vm.provision "shell", path: "provision.sh"
     end
 
