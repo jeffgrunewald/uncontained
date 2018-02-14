@@ -9,6 +9,8 @@ Vagrant.configure("2") do |config|
         master.vm.box = BOX_BASE
 
         master.vm.network :private_network, ip: "192.168.56.101"
+        master.vm.network :forwarded_port, guest: 8001, host: 8001
+        master.vm.network :forwarded_port, guest: 31112, host: 31112
 
         master.vm.provider :virtualbox do |vbox|
             vbox.customize ["modifyvm", :id, "--natdnshostresolver1", NAT_DNS_RESOLVER]
@@ -18,6 +20,7 @@ Vagrant.configure("2") do |config|
         end
 
         master.vm.provision "shell", path: "provision.sh"
+        master.vm.provision "file", source: "manifests", destination: "manifests"
     end
 
     config.vm.define "worker" do |worker|
