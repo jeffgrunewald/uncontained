@@ -4,9 +4,21 @@ echo "Provisioning ${HOSTNAME}"
 
 echo "Installing lxd and related packages"
 apt-get update > /dev/null
-apt-get install -y -t xenial-backports lxd lxd-client > /dev/null
-apt-get install -y criu rng-tools snapd zfsutils-linux > /dev/null
+apt-get install -y -t \
+    xenial-backports \
+    lxd \
+    lxd-client \
+    > /dev/null
+apt-get install -y \
+    criu \
+    libnet1 \
+    rng-tools \
+    zfsutils-linux \
+    > /dev/null
 usermod -a -G lxd vagrant > /dev/null
+
+wget https://launchpad.net/ubuntu/+source/criu/2.12-1ubuntu2/+build/12156767/+files/criu_2.12-1ubuntu2_amd64.deb
+dpkg -i criu_2.12-1ubuntu2_amd64.deb
 
 echo "Configure the lxd daemon"
 sleep 15
