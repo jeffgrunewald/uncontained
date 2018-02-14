@@ -2,24 +2,11 @@
 
 echo "Provisioning ${HOSTNAME}"
 
-echo "Preparing iptables"
-sudo modprobe br_netfilter > /dev/null
-echo 'br_netfilter' | sudo tee -a /etc/modules
-echo 'net.bridge.bridge-nf-call-iptables = 1' | sudo tee -a /etc/sysctl.conf
-sudo sysctl -p > /dev/null
-
-echo "Removing default LXD"
-sudo apt-get remove lxd > /dev/null
-
-echo "Installing snapd"
-sudo apt-get install snapd zfsutils-linux > /dev/null
-
-echo "Installing lxd"
-sudo snap install lxd > /dev/null
-
-echo "Updating PATH to include /snap"
-export PATH=/snap/bin:$PATH
-echo 'export PATH=/snap/bin:$PATH' | tee -a /home/ubuntu/.bashrc
+echo "Installing lxd and related packages"
+apt-get update > /dev/null
+apt-get install -y -t xenial-backports lxd lxd-client > /dev/null
+apt-get install -y criu rng-tools snapd zfsutils-linux > /dev/null
+usermod -a -G lxd vagrant > /dev/null
 
 echo "Configure the lxd daemon"
 sleep 15

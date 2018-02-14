@@ -1,4 +1,4 @@
-name: k8s
+name: uncontained
 config:
   boot.autostart: "true"
   linux.kernel_modules: ip_tables,ip6_tables,netlink_diag,nf_nat,overlay
@@ -7,7 +7,7 @@ config:
     lxc.mount.auto=proc:rw sys:rw
   security.nesting: "true"
   security.privileged: "true"
-description: ""
+description: "App container build profile"
 devices:
   aadisable:
     path: /sys/module/nf_conntrack/parameters/hashsize
@@ -17,6 +17,10 @@ devices:
     path: /sys/module/apparmor/parameters/enabled
     source: /dev/null
     type: disk
+  eth0:
+    nictype: bridged
+    parent: lxdbr0
+    type: nic
   root:
     path: /
     pool: default
