@@ -9,8 +9,9 @@ Vagrant.configure("2") do |config|
         master.vm.box = BOX_BASE
 
         master.vm.network :private_network, ip: "192.168.56.101"
-        master.vm.network :forwarded_port, guest: 8001, host: 8001
-        master.vm.network :forwarded_port, guest: 31112, host: 31112
+        master.vm.network :forwarded_port, guest: 30000, host: 30000
+        master.vm.network :forwarded_port, guest: 31000, host: 31000
+        master.vm.network :forwarded_port, guest: 32000, host: 32000
 
         master.vm.provider :virtualbox do |vbox|
             vbox.customize ["modifyvm", :id, "--natdnshostresolver1", NAT_DNS_RESOLVER]
