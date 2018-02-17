@@ -54,3 +54,14 @@ Migrate the container to the second host, into the second host and verify
 ```
 lxc move lxd1:uncontained lxd2:uncontained
 ```
+
+Build and sign the rkt images (jump to the rkt portion of the tutorial), then copy the artifacts back to your Mac
+```
+lxc file pull \
+    uncontained/uncontained/rkt/consul-v1.0.3.aci \
+    uncontained/uncontained/rkt/vault-v0.9.3.aci \
+    uncontained/uncontained/rkt/consul-v1.0.3.aci.asc \
+    uncontained/uncontained/rkt/vault-v0.9.3.aci.asc \
+    uncontained/uncontained/rkt/pubkeys.gpg \
+    ./
+```
