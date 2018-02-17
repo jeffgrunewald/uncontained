@@ -1,4 +1,4 @@
-Kubernetes Setup
+### Kubernetes Walkthrough ###
 
 Log into the master to initiate the cluster
 ```
