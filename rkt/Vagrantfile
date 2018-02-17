@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
         rkt.vm.provision "file", source: "consul-vault-pod.json", destination: "consul-vault-pod.json"
         rkt.vm.provision "file", source: "vault-configs", destination: "vault-configs"
         rkt.vm.provision "file", source: "gpg-batch", destination: "gpg-batch"
-        rkt.vm.provision "file", source: "consul-vault.service", destination: "/etc/systemd/system/consul-vault.service"
+        rkt.vm.provision "file", source: "consul-vault.service", destination: "consul-vault.service"
         rkt.vm.provision "shell", path: "provision.sh"
         rkt.vm.provision "file", source: "cleanup.sh", destination: "cleanup.sh"
     end
