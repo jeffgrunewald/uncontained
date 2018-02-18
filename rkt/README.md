@@ -13,7 +13,8 @@ chmod +x build-consul.sh build-vault.sh
 ./build-consul.sh && ./build-vault.sh
 ```
 
-Generate the gpg keys
+Edit the gpg-batch file to replace the placeholders for "Name-Real" and "Name-Email" with 
+your own values and then use it to generate the gpg key
 ```
 gpg --batch --gen-key gpg-batch (may need to run sudo rngd -r /dev/urandom)
 ```
@@ -41,7 +42,7 @@ gpg --no-default-keyring \
     --export <you@youremail.com> > pubkeys.gpg
 ```
 
-Sign the acis with the rkt gpg keys
+Sign the acis with the rkt gpg key
 ```
 gpg --no-default-keyring \
     --armor \
@@ -61,6 +62,8 @@ gpg --no-default-keyring \
 Jump back to the LXD tutorial to retrieve your artifacts
 
 From within the rkt vm, retrieve the artifacts
+(Or add the build directory where the artifacts exist as an additional file provisioner for the rkt
+Vagrant vm if you haven't already created the instance.)
 ```
 curl -sLO https://github.com/jeffgrunewald/uncontained/releases/download/v0.1.0/consul-v1.0.3.aci
 curl -sLO https://github.com/jeffgrunewald/uncontained/releases/download/v0.1.0/consul-v1.0.3.aci.asc
